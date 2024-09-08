@@ -1,9 +1,10 @@
+#ARCH = arm
 CC=arm-none-eabi-gcc
 AS=arm-none-eabi-as
 LD=arm-none-eabi-ld
 OBJCOPY=arm-none-eabi-objcopy
-LIBDIR=/home/xihua/develop/gcc-arm-11.2-2022.02-x86_64-arm-none-eabi/lib/gcc/arm-none-eabi/11.2.1
-
+#LIBDIR=/home/xihua/develop/gcc-arm-11.2-2022.02-x86_64-arm-none-eabi/lib/gcc/arm-none-eabi/11.2.1
+LIBDIR=
 # 查找当前目录下所有的 .c 和 .s 文件
 SRC_C = $(wildcard *.c)
 SRC_S = init.s startup.o
@@ -21,7 +22,8 @@ DEPFLAGS = -MMD -MP
 kernel.bin:kernel
 	$(OBJCOPY) -O binary $< $@
 kernel:$(OBJS) kernel.ld
-	$(LD) -T kernel.ld $(OBJS) -L$(LIBDIR) -lgcc -o $@
+	#$(LD) -T kernel.ld $(OBJS)  -lgcc -o $@
+	$(CC) -T kernel.ld $(OBJS) -o $@ -nostartfiles -nostdlib -lgcc
 %.o:%.s
 	$(AS) -g $< -o $@
 %.o:%.c

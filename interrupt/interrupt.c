@@ -31,8 +31,8 @@ void common_irq_handler() {
 
     }
 
-//    uint32_t irq_number = VIC_IRQ_STATUS;
-//    printk("%s:%u\n", "common_irq_handler",irq_number);
+    uint32_t irq_number = VIC_IRQ_STATUS;
+    printk("%s:%u\n", "common_irq_handler",irq_number);
     UART0_DR = UART0_DR;
 }
 
