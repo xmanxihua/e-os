@@ -5,6 +5,7 @@
 #include <stdint.h>
 #include "interrupt.h"
 #include "utils.h"
+#include "timer.h"
 
 #define UART0_BASE_ADDR 0x101f1000
 #define UART0_DR (*((volatile uint32_t *)(UART0_BASE_ADDR + 0x000)))
@@ -24,16 +25,14 @@ void enable_intr(unsigned int offset) {
 }
 
 void common_irq_handler() {
-    for (int i=0; i<1000000;i++) {
-        for (int j = 0; j<100;j++) {
-
-        }
-
-    }
-
     uint32_t irq_number = VIC_IRQ_STATUS;
-    printk("%s:%u\n", "common_irq_handler",irq_number);
-    UART0_DR = UART0_DR;
+//    printk("%s:%u\n", "common_irq_handler",irq_number);
+    if (irq_number & 1<<12) {
+        printk("%s\n", "uart interrupt");
+        UART0_DR = UART0_DR;
+    }else if (irq_number & 1<<4) {
+        timer_handler();
+    }
 }
 
 void uart0_init() {

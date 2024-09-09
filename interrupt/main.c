@@ -4,7 +4,7 @@
 #include "mmu.h"
 #include "utils.h"
 #include "interrupt.h"
-
+#include "timer.h"
 typedef void (*init_func)(void);
 
 #define UFCON0  ((volatile unsigned int *)(0x101f1000))
@@ -31,8 +31,9 @@ static init_func init[] = {
         copy_vectors,
         set_up_mmu,
         helloworld,
-        enable_irq,
         uart0_init,
+        timer_init,
+        enable_irq,
 
 };
 
