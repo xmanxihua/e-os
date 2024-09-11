@@ -1,2 +1,3 @@
-mmu.o: mmu.c mmu.h
+mmu.o: mmu.c mmu.h utils.h
 mmu.h:
+utils.h:

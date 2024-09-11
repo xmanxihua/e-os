@@ -42,5 +42,8 @@ void plat_boot(void) {
     for (i = 0; i < sizeof(init) / sizeof(init_func); i++) {
         init[i]();
     }
+    volatile unsigned int * p = 0xFFFFF000;
+    *p=1;
+    printk("read p= %d\n",*p);
     while (1);
 }

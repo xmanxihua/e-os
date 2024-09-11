@@ -55,14 +55,17 @@ void set_up_mmu();
 //} page_table_item;
 
 #define SECOND_SMALL_TAG 0b10
-#define BUFFER 0
-#define CACHE 0
-#define AP 0
+#define BUFFER (0 << 2)
+#define CACHE (0 << 3)
+#define AP0 (0b01 << 4)
+#define AP1 (0b01 << 6)
+#define AP2 (0b01 << 8)
+#define AP3 (0b01 << 10)
 #define S 0
 #define XN 0
 #define APX 0
 #define PAGE_BASE(x) ((x) & 0xFFFFF000)
 
-#define PAGE_TABLE_ITEM(x) PAGE_BASE(x) | CACHE | BUFFER | SECOND_SMALL_TAG
+#define PAGE_TABLE_ITEM(x) PAGE_BASE(x)|AP3 |AP2|AP1|AP0| CACHE | BUFFER | SECOND_SMALL_TAG
 
 #endif //__MMU_H__

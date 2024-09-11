@@ -1,5 +1,5 @@
 #include "mmu.h"
-
+#include "utils.h"
 void start_mmu(void);
 //32M
 void set_up_mmu() {
@@ -26,7 +26,7 @@ void set_up_mmu() {
     unsigned int *ppci = (unsigned int *) PG_CONTENT_ADDR;
     unsigned int *ppti = (unsigned int *) PG_TABLE_ADDR;
     unsigned int page_base = 0;
-    for (int i = 0; i < 4096; ++i) {
+    for (int i = 0; i < 1320; ++i) {
 
         *ppci = PAGE_CONTENT_ITEM((unsigned int)ppti);
 
@@ -45,7 +45,7 @@ void start_mmu(void) {
     unsigned int ttb = PG_CONTENT_ADDR;
     asm(
             "mcr p15,0,%0,c2,c0,0\n"
-            "mvn r0,#0\n"
+            "mvn r0,#0b10\n"
             "mcr p15,0,r0,c3,c0,0\n"
             "mov r0,#0x1\n"
             "mcr p15,0,r0,c1,c0,0\n"
@@ -56,4 +56,12 @@ void start_mmu(void) {
             : "r" (ttb)
             :"r0"
             );
+}
+
+void data_abort() {
+    printk("%s\n","data_abort");
+}
+
+void prefetch_abort() {
+    printk("%s\n","prefetch_abort");
 }
