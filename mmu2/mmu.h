@@ -54,6 +54,10 @@ void set_up_mmu();
 //    unsigned int page_base:20;
 //} page_table_item;
 
+#define pa_offset 0xC0000000
+#define pg_shift 20
+#define pt_shift 10
+
 #define SECOND_SMALL_TAG 0b10
 #define BUFFER (0 << 2)
 #define CACHE (0 << 3)

@@ -28,8 +28,8 @@ void helloworld(void) {
 }
 
 static init_func init[] = {
-        copy_vectors,
         set_up_mmu,
+        copy_vectors,
         helloworld,
         uart0_init,
         timer_init,
