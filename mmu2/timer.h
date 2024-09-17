@@ -4,8 +4,9 @@
 
 #ifndef INTERRUPT_TIMER_H
 #define INTERRUPT_TIMER_H
+#include "mmu.h"
 
-#define TIMER0_BASE 0x101E2000
+#define TIMER0_BASE (0x101E2000+PA_OFFSET)
 
 //设置计数器值 寄存器，即时生效
 #define TIMER0_LOAD (*((volatile unsigned int *)(TIMER0_BASE+0x00)))

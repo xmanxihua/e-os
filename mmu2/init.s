@@ -8,7 +8,7 @@
 .equ UND_MOD,          0x1b
 
 .equ MEM_SIZE,         0x10000
-.equ TEXT_BASE,         0x40000
+.equ TEXT_BASE,         0xC0400000
 .equ _SVC_STACK,        (TEXT_BASE+MEM_SIZE-4)
 .equ _IRQ_STACK,        (_SVC_STACK-0x400)
 .equ _FIQ_STACK,        (_IRQ_STACK-0x400)
@@ -16,15 +16,38 @@
 .equ _UND_STACK,        (_ABT_STACK-0x400)
 .equ _SYS_STACK,        (_UND_STACK-0x400)
 
-.text
+.section .vectors,"ax"
 .code 32
-.global _vector_reset
+.align 0
 
 .extern plat_boot
 .extern __bss_start__
 .extern __bss_end__
 
+.global _vectors_start
+.global _vectors_end
+
+_vectors_start:
+    ldr pc, =_vector_reset
+    ldr pc, vector_undefined
+    ldr pc, vector_swi
+    ldr pc, vector_prefetch_abort
+    ldr pc, vector_data_abort
+    ldr pc, vector_reserved
+    ldr pc, vector_irq
+    ldr pc, vector_fiq
+
+ vector_undefined: .word _vector_undefined
+ vector_swi: .word _vector_swi
+ vector_prefetch_abort: .word _vector_prefetch_abort
+ vector_data_abort: .word _vector_data_abort
+ vector_reserved: .word _vector_reserved
+ vector_irq: .word _vector_irq
+ vector_fiq: .word _vector_fiq
+_vectors_end:
+
 _vector_reset:
+
     msr cpsr_c, #(DISABLE_IRQ|DISABLE_FIQ|SVC_MOD)
     ldr sp,=_SVC_STACK
 
@@ -42,6 +65,7 @@ _vector_reset:
 
     msr cpsr_c, #(DISABLE_IRQ|DISABLE_FIQ|SYS_MOD)
     ldr sp,=_SYS_STACK
+
  _clear_bss:
     ldr r1, bss_start__
     ldr r3, bss_end__

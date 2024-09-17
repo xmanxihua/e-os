@@ -1,6 +1,7 @@
 #include "utils.h"
+#include "mmu.h"
 
-#define UFCON0  ((volatile unsigned int *)(0x101f1000))
+#define UFCON0  ((volatile unsigned int *)(0x101f1000+PA_OFFSET))
 
 const char *digits = "0123456789abcdef";
 char numbers[68];

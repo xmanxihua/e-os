@@ -4,8 +4,8 @@
 
 #ifndef INTERRUPT_INTERRUPT_H
 #define INTERRUPT_INTERRUPT_H
-
-#define VIC_BASE_ADDR 0x10140000
+#include "mmu.h"
+#define VIC_BASE_ADDR (0x10140000+PA_OFFSET)
 #define VIC_IRQ_STATUS (*((volatile uint32_t *)(VIC_BASE_ADDR + 0x0)))
 #define VIC_INTENABLE (*((volatile uint32_t *)(VIC_BASE_ADDR + 0x010)))
 

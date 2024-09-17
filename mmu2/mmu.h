@@ -2,14 +2,16 @@
 #define __MMU_H__
 
 //页目录表的地址
-#define PG_CONTENT_ADDR 0x60000
+#define PG_CONTENT_ADDR 0x20000
 //页表起始地址
 #define PG_TABLE_ADDR (PG_CONTENT_ADDR+(1<<14))
 
 //虚拟地址和物理地址便宜量
-#define PA_OFFSET 0x00000000
+#define PA_OFFSET 0xC0000000
 
 #define PAGE_SIZE 4096
+
+#define INIT_PAGE_SIZE (0x20000+0x1000+0x100000+0x400)
 
 
 void set_up_mmu();
@@ -54,7 +56,6 @@ void set_up_mmu();
 //    unsigned int page_base:20;
 //} page_table_item;
 
-#define pa_offset 0xC0000000
 #define pg_shift 20
 #define pt_shift 10
 

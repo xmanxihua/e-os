@@ -1,9 +1,9 @@
-ENTRY(_start)
+ENTRY(_vectors_start)
 SECTIONS
 {
-    . = 0x00010000;
-    .text :{
-        *(.startup)
+    . = 0xC0200000;
+    .text : {
+        *(.vectors)
         *(.text)
     }
     . = ALIGN(32);

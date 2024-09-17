@@ -6,8 +6,9 @@
 #include "interrupt.h"
 #include "utils.h"
 #include "timer.h"
+#include "mmu.h"
 
-#define UART0_BASE_ADDR 0x101f1000
+#define UART0_BASE_ADDR (0x101f1000 + PA_OFFSET)
 #define UART0_DR (*((volatile uint32_t *)(UART0_BASE_ADDR + 0x000)))
 #define UART0_IMSC (*((volatile uint32_t *)(UART0_BASE_ADDR + 0x038)))
 
@@ -39,4 +40,13 @@ void uart0_init() {
     enable_intr(12);
     /* enable RXIM interrupt */
     UART0_IMSC = 1<<4;
+}
+
+
+void data_abort() {
+    printk("%s\n", "data_abort");
+}
+
+void prefetch_abort() {
+    printk("%s\n", "prefetch_abort");
 }
